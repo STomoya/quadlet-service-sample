@@ -1,0 +1,18 @@
+[Unit]
+Description=Portable Production Rust Task
+After=network-online.target
+
+[Container]
+Image=localhost/{{IMAGE_NAME}}
+ReadOnly=true
+RemapUsers=keep-id
+Volume={{PROJECT_DIR}}/data:/data:Z
+EnvironmentFile={{PROJECT_DIR}}/secrets/.env.prod
+LogDriver=journald
+
+[Service]
+Type=oneshot
+TimeoutStartSec=300
+
+[Install]
+WantedBy=default.target
